@@ -1,17 +1,10 @@
+FROM python:3.8-slim-buster
 
-FROM python:3.9
+WORKDIR /python-docker
 
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 
-WORKDIR /code
+COPY . .
 
-
-COPY ./requirements.txt /code/requirements.txt
-
-
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-
-
-COPY ./app /code/app
-
-
-CMD ["fastapi", "run", "app/main.py", "--port", "80"]
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
